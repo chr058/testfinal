@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    stages {
+        stage("pull-updates-to-dev"){
+            steps {
+                sshagent (credentials: ['e91user']) {
+                    echo "Running dev"
+                    sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'cd /home/e91user/testfinal && git checkout . && git checkout dev && git pull'"
+                }
+                sleep 2
+            }
+        }
+        stage("build-dev-container"){
+            steps {
+                sshagent (credentials: ['e91user']) {
+                    echo "Removing Container"
+                    echo "Building Container"
+                    sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'cd /home/e91user/testfinal && docker build -t centosapache .'"
+                    sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'cd /home/e91user/testfinal && docker run --name dev -d -p 2018:80 centosapache'"
+                }
+                sleep 2
+            }
+        }
+        stage("test-dev-container"){
+            steps {
+                sshagent (credentials: ['e91user']) {
+                    echo "Testing Dev Container"
+                    sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'curl localhost:2018 ' "
+                }
+                sleep 2
+            }
+        }
+    }
+}
