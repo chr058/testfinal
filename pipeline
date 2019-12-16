@@ -4,7 +4,7 @@ pipeline {
         stage("pull-updates-to-dev"){
             steps {
                 sshagent (credentials: ['e91user']) {
-                    sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'cd /home/e91user/testfinal && git checkout . && git checkout dev && git pull'"
+                    sh "ssh -o StrictHostKeyChecking=no root@54.172.184.216 'cd /home/e91user/testfinal && git checkout . && git checkout dev && git pull'"
                 }
                 sleep 2
             }
@@ -12,9 +12,9 @@ pipeline {
         stage("build-dev-container"){
             steps {
                 sshagent (credentials: ['e91user']) {
-                    sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'docker stop dev && docker rm dev' "
-                    sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'cd /home/e91user/testfinal && docker build -t centosapache .'"
-                    sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'cd /home/e91user/testfinal && docker run --name dev -d -p 2018:80 centosapache'"
+                    sh "ssh -o StrictHostKeyChecking=no root@54.172.184.216 'docker stop dev && docker rm dev' "
+                    sh "ssh -o StrictHostKeyChecking=no root@54.172.184.216 'cd /home/e91user/testfinal && docker build -t centosapache .'"
+                    sh "ssh -o StrictHostKeyChecking=no root@54.172.184.216 'cd /home/e91user/testfinal && docker run --name dev -d -p 2018:80 centosapache'"
                 }
                 sleep 2
             }
@@ -22,7 +22,7 @@ pipeline {
         stage("test-dev-container"){
             steps {
                 sshagent (credentials: ['e91user']) {
-                    sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'curl localhost:2018 ' "
+                    sh "ssh -o StrictHostKeyChecking=no root@54.172.184.216 'curl localhost:2018 ' "
                 }
                 sleep 2
             }
@@ -30,8 +30,8 @@ pipeline {
         stage("pull-updates-to-stage"){
 	    steps('Merge approval') {
 		sshagent (credentials: ['e91user']) {
-		    sh "ssh -o StrictHostKeyChecking=no root@34.235.125.12 'cd /home/e91user/testfinal && git checkout . && git checkout stage && git pull'"
-		    sh "ssh -o StrictHostKeyChecking=no root@34.235.125.12 'cd /home/e91user/testfinal && git merge origin/dev && git push origin stage'"
+		    sh "ssh -o StrictHostKeyChecking=no root@184.72.210.85 'cd /home/e91user/testfinal && git checkout . && git checkout stage && git pull'"
+		    sh "ssh -o StrictHostKeyChecking=no root@184.72.210.85 'cd /home/e91user/testfinal && git merge origin/dev && git push origin stage'"
 		}
 		sleep 2
 	    }
@@ -39,9 +39,9 @@ pipeline {
 	stage("build-stage-container"){
 	    steps {
 		sshagent (credentials: ['e91user']) {
-		    sh "ssh -o StrictHostKeyChecking=no root@34.235.125.12 'docker stop stage && docker rm stage' "
-		    sh "ssh -o StrictHostKeyChecking=no root@34.235.125.12 'cd /home/e91user/testfinal && docker build -t centosapache .'"
-		    sh "ssh -o StrictHostKeyChecking=no root@34.235.125.12 'cd /home/e91user/testfinal && docker run --name stage -d -p 2018:80 centosapache'"
+		    sh "ssh -o StrictHostKeyChecking=no root@184.72.210.85 'docker stop stage && docker rm stage' "
+		    sh "ssh -o StrictHostKeyChecking=no root@184.72.210.85 'cd /home/e91user/testfinal && docker build -t centosapache .'"
+		    sh "ssh -o StrictHostKeyChecking=no root@184.72.210.85 'cd /home/e91user/testfinal && docker run --name stage -d -p 2018:80 centosapache'"
 		}
 		sleep 2
 	    }
@@ -49,7 +49,7 @@ pipeline {
 	stage("test-stage-container"){
 	    steps {
 		sshagent (credentials: ['e91user']) {
-		    sh "ssh -o StrictHostKeyChecking=no root@34.235.125.12 'curl localhost:2018 ' "
+		    sh "ssh -o StrictHostKeyChecking=no root@184.72.210.85 'curl localhost:2018 ' "
 		}
 		sleep 2
 	    }
