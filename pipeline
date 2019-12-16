@@ -4,7 +4,7 @@ pipeline {
         stage("pull-updates-to-dev"){
             steps {
                 sshagent (credentials: ['e91user']) {
-                    echo "Running dev"
+                    echo "Running  dev"
                     sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'cd /home/e91user/testfinal && git checkout . && git checkout dev && git pull'"
                 }
                 sleep 2
