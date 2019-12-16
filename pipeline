@@ -39,7 +39,7 @@ pipeline {
 	stage("build-stage-container"){
 	    steps {
 		sshagent (credentials: ['e91user']) {
-		    sh "ssh -o StrictHostKeyChecking=no root@184.72.210.85 'docker stop prod && docker rm stage' "
+		    sh "ssh -o StrictHostKeyChecking=no root@184.72.210.85 'docker stop stage && docker rm stage' "
 		    sh "ssh -o StrictHostKeyChecking=no root@184.72.210.85 'cd /home/e91user/testfinal && docker build -t centosapache .'"
 		    sh "ssh -o StrictHostKeyChecking=no root@184.72.210.85 'cd /home/e91user/testfinal && docker run --name stage -d -p 2018:80 centosapache'"
 		}
