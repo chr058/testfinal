@@ -14,7 +14,6 @@ pipeline {
             steps {
                 sshagent (credentials: ['e91user']) {
                     echo "Removing Container"
-                    sh "ssh -o StrictHostKeyChecking=no root@34.235.125.12 'docker stop stage && docker rm dev' "
                     echo "Building Container"
                     sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'cd /home/e91user/testfinal && docker build -t centosapache .'"
                     sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'cd /home/e91user/testfinal && docker run --name dev -d -p 2018:80 centosapache'"
