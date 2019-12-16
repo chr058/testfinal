@@ -14,7 +14,7 @@ pipeline {
                 sshagent (credentials: ['e91user']) {
                     sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'docker stop dev && docker rm dev' "
                     sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'cd /home/e91user/testfinal && docker build -t centosapache .'"
-                    sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'cd /home/e91user/testfinal && docker run --name dev -d -p 80:2018 centosapache'"
+                    sh "ssh -o StrictHostKeyChecking=no root@54.144.41.140 'cd /home/e91user/testfinal && docker run --name dev -d -p 2018:80 centosapache'"
                 }
                 sleep 2
             }
@@ -41,7 +41,7 @@ pipeline {
 		sshagent (credentials: ['e91user']) {
 		    sh "ssh -o StrictHostKeyChecking=no root@34.235.125.12 'docker stop stage && docker rm stage' "
 		    sh "ssh -o StrictHostKeyChecking=no root@34.235.125.12 'cd /home/e91user/testfinal && docker build -t centosapache .'"
-		    sh "ssh -o StrictHostKeyChecking=no root@34.235.125.12 'cd /home/e91user/testfinal && docker run --name stage -d -p 80:2018 centosapache'"
+		    sh "ssh -o StrictHostKeyChecking=no root@34.235.125.12 'cd /home/e91user/testfinal && docker run --name stage -d -p 2018:80 centosapache'"
 		}
 		sleep 2
 	    }
@@ -68,7 +68,7 @@ pipeline {
 		sshagent (credentials: ['e91user']) {
 		    sh "ssh -o StrictHostKeyChecking=no root@35.245.144.207 'docker stop prod && docker rm prod' "
 		    sh "ssh -o StrictHostKeyChecking=no root@35.245.144.207 'cd /home/e91user/testfinal && docker build -t centosapache .'"
-		    sh "ssh -o StrictHostKeyChecking=no root@35.245.144.207 'cd /home/e91user/testfinal && docker run --name prod -d -p 80:2018 centosapache'"
+		    sh "ssh -o StrictHostKeyChecking=no root@35.245.144.207 'cd /home/e91user/testfinal && docker run --name prod -d -p 2018:80 centosapache'"
 		}
 		sleep 2
 	    }
