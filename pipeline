@@ -28,7 +28,7 @@ pipeline {
             }
         }
         stage("pull-updates-to-stage"){
-	    steps('Merge approval') {
+	    steps() {
 		sshagent (credentials: ['e91user']) {
 		    sh "ssh -o StrictHostKeyChecking=no root@184.72.210.85 'cd /home/e91user/testfinal && git checkout . && git checkout stage && git pull'"
 		    sh "ssh -o StrictHostKeyChecking=no root@184.72.210.85 'cd /home/e91user/testfinal && git merge origin/dev && git push origin stage'"
@@ -55,7 +55,7 @@ pipeline {
 	    }
 	 }
         stage("pull-updates-to-prod"){
-	    steps('Merge approval') {
+	    steps() {
 		sshagent (credentials: ['e91user']) {
 		    sh "ssh -o StrictHostKeyChecking=no root@35.245.144.207 'cd /home/e91user/testfinal && git checkout . && git checkout master && git pull'"
 		    sh "ssh -o StrictHostKeyChecking=no root@35.245.144.207 'cd /home/e91user/testfinal && git merge origin/stage && git push origin master'"
