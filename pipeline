@@ -5,7 +5,6 @@ pipeline {
             steps {
                 sshagent (credentials: ['e91user']) {
                     sh "ssh -o StrictHostKeyChecking=no root@54.172.184.216 'cd /home/e91user/testfinal && git checkout . && git checkout dev && git pull'"
-                    sh "ssh -o StrictHostKeyChecking=no root@184.72.210.85 'cd /home/e91user/testfinal && git checkout . && git checkout stage && git pull'"
                 }
                 sleep 2
             }
