@@ -34,7 +34,7 @@ CMD     ["/usr/sbin/httpd","-D","FOREGROUND"]
 # /var/www/html/ on the container.
 COPY    index.html /var/www/html/
 COPY    images /var/www/html/
-
+COPY    images/chandra.jpg /var/www/html/images
 # 6)
 # If everything went fine then docker
 # will package the container as a new image 
